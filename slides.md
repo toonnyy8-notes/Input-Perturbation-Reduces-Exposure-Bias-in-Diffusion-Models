@@ -39,8 +39,6 @@ The last comment block of each slide will be treated as slide notes. It will be 
 -->
 
 ---
-transition: fade-out
----
 
 # Exposure Bias
 
@@ -77,12 +75,124 @@ Here is another comment.
 -->
 
 ---
-layout: default
----
 
 # Exposure Bias in DPM
 
 <SlideCurrentNo class="absolute bottom-4 right-8" />
+
+---
+
+# Exposure Bias in DPM
+
+<div v-click>
+<myline x1=110 y1=170 y2=132.5 width=5 color=#a57></myline>
+<myline x1=870 y1=170 y2=132.5 width=5 color=#a57></myline>
+<myarrow x1=110 y1=135 x2=330 width=5 color=#a57></myarrow>
+<myarrow x1=870 y1=135 x2=620 width=5 color=#a57></myarrow>
+
+<span class="text-xl absolute left-85 top-30 pointer-events-none">$x_t\sim\mathcal{N}(x_t;\sqrt{\bar\alpha_t}x_0,1-\bar\alpha_t)$</span>
+</div>
+
+<img class="m-auto pt-20" src="/imgs/duoduo.jpg" />
+
+<div v-click>
+<myarrow x1=325 y1=290 y2=345 width=5 color=#a57></myarrow>
+<myarrow x1=220 y1=345 y2=290 width=5 color=#a57></myarrow>
+
+<span class="text-xl absolute left-38 top-88 pointer-events-none">$\hat x_t\sim\mathcal{N}(\hat x_t;\mu_{\theta}(\hat x_{t+1}),\sigma_t)$</span>
+</div>
+
+
+<div class="grid grid-cols-2">
+
+<p v-click class="text-3xl text-center pt-20">
+
+$\hat x_t=x_t+\underbrace{\textcolor{#a5a}{\xi_t}}_\text{Exposure Bias}$</p>
+
+<img v-click class="ml-auto mr-auto" src="/imgs/exposure_bias.png" />
+
+</div>
+
+---
+
+
+<div class="grid grid-cols-2">
+
+<div>
+
+# Exposure Bias in DPM
+
+</div>
+
+<div>
+
+<img class="m-auto" src="/imgs/iddpm-fig11.png"/>
+
+<span class="text-base">cite: <a href="https://icml.cc/virtual/2021/poster/9531" target="_blank">Improved Denoising Diffusion Probabilistic Models.</a></span>
+
+</div>
+
+</div>
+
+---
+
+# Solutions
+<span class="text-xl">Smoother prediction function $\mu(\cdot)$</span>
+
+## Regularization based on Lipschitz Continuous Functions
+
+<p class="text-xl">
+
+- Gradient penalty.
+$\mathcal{L}_\text{GP}=\mathcal{L}_\text{DPM}+\lambda_\text{GP}{\Bigg\Vert\cfrac{\partial\epsilon_\theta(x_t,t)}{\partial x}\Bigg\Vert}^2$
+
+- Weight decay.
+$\mathcal{L}_\text{WD}=\mathcal{L}_\text{DPM}+\lambda_\text{WD}{\Vert\theta\Vert}^2$
+
+</p>
+
+## <span class="color-#a5a">**Regularization with Input Perturbation**</span>
+
+<p class="text-xl">
+
+Assume that the **Exposure Bias** follows a **Normal Distribution**  
+$\Rightarrow$ 1. Two spatially close points $a$ and $b$ should lead to similar predictions $\mu(a, t)$ and $\mu(b, t)$.
+</p>
+
+---
+
+## Regularization with Input Perturbation
+
+<p class="text-xl">
+
+Assume that the **Exposure Bias** follows a **Normal Distribution**  
+$\Rightarrow$ 1. Two spatially close points $a$ and $b$ should lead to similar predictions $\mu(a, t)$ and $\mu(b, t)$.
+</p>
+
+### $\Rightarrow$ 2. Gaussian Prediction Error
+
+<div class="grid grid-cols-3">
+
+<img class="m-auto w-4/5" src="/imgs/fig6/hist_gaussian_error_300step_pixel_2049.png"/>
+<img class="m-auto w-4/5" src="/imgs/fig6/hist_gaussian_error_600step_pixel_2576.png"/>
+<img class="m-auto w-4/5" src="/imgs/fig6/hist_gaussian_error_900step_pixel_3072.png"/>
+
+</div>
+
+<p class="text-xl">
+
+The empirical distribution of $e^i_t=x_0-\hat x_0,\;\hat x_0\sim p_\theta(x_{0:t-1}|x_t)$, and $i$ is the input dimension.
+- The Shapiro–Wilk test shows that they follow a standard normal distribution.
+</p>
+
+<!--
+
+we use 50 randomly selected $e^i_t$ values and the Shapiro–Wilk test
+(Shapiro & Wilk, 1965) to verify that they follow a standard normal distribution. The confidence level is set at 95% and
+we reject the null hypothesis if the p-value is less than 0.05. The null hypothesis was rejected only in a small minority of
+cases, confirming that the error et is almost isotropic Gaussian distributed. Fig. 6 shows a few histogram examples for $e^t_i$
+computed at different pixels.
+-->
 
 ---
 
@@ -154,8 +264,23 @@ $$\begin{aligned}
 
 ---
 
-# Comparison of Explicit Lipshitz Continuous Methods
+<div class="grid grid-cols-2">
 
+<div>
+
+# A
+
+b
+
+</div>
+
+<img class="m-auto" src="/imgs/tab2.png" />
+
+</div>
+
+<img class="m-auto w-4/5 pt-10" src="/imgs/tab7.png" />
+
+<SlideCurrentNo class="absolute bottom-4 right-8" />
 
 ---
 
@@ -176,6 +301,11 @@ FFHQ $128\times 128$
 </p>
 </div>
 </div>
+
+<SlideCurrentNo class="absolute bottom-4 right-8" />
+
+---
+<img class="m-auto" src="/imgs/tab3.png" />
 
 <SlideCurrentNo class="absolute bottom-4 right-8" />
 
