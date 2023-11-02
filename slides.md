@@ -12,7 +12,7 @@ info: |
 drawings:
   persist: false
 transition: slide-left
-title: Welcome to Slidev
+title: DDPM-IP
 mdc: true
 download: true
 ---
