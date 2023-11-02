@@ -44,12 +44,16 @@ The last comment block of each slide will be treated as slide notes. It will be 
 
 <span></span>
 
+<p class="text-xl text-justify">
+
 Exposure bias, also known as the **Teacher Forcing Problem**, is a common issue in training autoregressive models.
 This issue occurs when there is a **Mismatch between how the model is Trained and how it is used during Generation**.
 
 The problem arises because the model may not perform as well during inference as it did during training. It can make mistakes that accumulate over time, especially when generating longer sequences. These errors can result from slight inaccuracies in earlier predictions, leading to a divergence from the true sequence.
 
-<img class="m-auto w-3/5" src="/imgs/exposure_bias.png" />
+</p>
+
+<img v-click class="m-auto w-3/5" src="/imgs/exposure_bias.png" />
 
 <SlideCurrentNo class="absolute bottom-4 right-8" />
 
@@ -78,7 +82,38 @@ Here is another comment.
 
 # Exposure Bias in DPM
 
+<span></span>
+
+<p class="text-xl text-justify">
+
+Diffusion Probabilistic Models (DPM) have achieved excellent performance in various generation tasks, but their **High Training and Generation Time** have been criticized.
+
+Similar to autoregressive models, the **Step-by-Step** generation approach leads to **Exposure Bias** in DPM. To achieve high-quality generation results, a significant amount of training time is required to reduce errors at each step.
+
+</p>
+
+<img v-click=1 class="m-auto pb-10" src="/imgs/duoduo.jpg" />
+<myarrow
+  v-click=1
+  class="myarrow slidev-vclick-target slidev-vclick-hidden"
+  x1=925 y1=375 x2=60 width=5 color=#a57></myarrow>
+
+<p v-click=2 class="text-xl text-justify">
+To alleviate this problem, the authors propose a surprisingly simple yet very effective method, which consists in explicitly modelling the prediction error during training.
+</p>
+
+
 <SlideCurrentNo class="absolute bottom-4 right-8" />
+
+<style>
+.myarrow.slidev-vclick-target {
+  transition: all 1000ms ease;
+}
+
+.myarrow.slidev-vclick-hidden {
+  translate: 1000px;
+}
+</style>
 
 ---
 
@@ -113,6 +148,8 @@ $\hat x_t=x_t+\underbrace{\textcolor{#a5a}{\xi_t}}_\text{Exposure Bias}$</p>
 
 </div>
 
+<SlideCurrentNo class="absolute bottom-4 right-8" />
+
 ---
 
 
@@ -122,9 +159,29 @@ $\hat x_t=x_t+\underbrace{\textcolor{#a5a}{\xi_t}}_\text{Exposure Bias}$</p>
 
 # Exposure Bias in DPM
 
+<span class="text-xl">Supporting Evidence in Improved-DDPM</span>
+
+<p class="text-2xl">
+
+Ideally, the more steps the better.
+
+</p>
+
+<p v-click=1 class="text-2xl">
+However, when the number of steps increases to more than 100~300,
+
+the quality of the generated samples begins to decline.
+</p>
+
+<p v-click=2 class="text-2xl">
+This is due to excessive error accumulation due to exposure bias.
+</p>
+
 </div>
 
 <div>
+
+<myellipse v-click=1 x=830 y=290 rx=100 ry=60 color=#a5a></myellipse>
 
 <img class="m-auto" src="/imgs/iddpm-fig11.png"/>
 
@@ -133,6 +190,8 @@ $\hat x_t=x_t+\underbrace{\textcolor{#a5a}{\xi_t}}_\text{Exposure Bias}$</p>
 </div>
 
 </div>
+
+<SlideCurrentNo class="absolute bottom-4 right-8" />
 
 ---
 
@@ -159,6 +218,8 @@ Assume that the **Exposure Bias** follows a **Normal Distribution**
 $\Rightarrow$ 1. Two spatially close points $a$ and $b$ should lead to similar predictions $\mu(a, t)$ and $\mu(b, t)$.
 </p>
 
+<SlideCurrentNo class="absolute bottom-4 right-8" />
+
 ---
 
 ## Regularization with Input Perturbation
@@ -184,6 +245,8 @@ $\Rightarrow$ 1. Two spatially close points $a$ and $b$ should lead to similar p
 The empirical distribution of $e^i_t=x_0-\hat x_0,\;\hat x_0\sim p_\theta(x_{0:t-1}|x_t)$, and $i$ is the input dimension.
 - The Shapiro–Wilk test shows that they follow a standard normal distribution.
 </p>
+
+<SlideCurrentNo class="absolute bottom-4 right-8" />
 
 <!--
 
@@ -268,9 +331,10 @@ $$\begin{aligned}
 
 <div>
 
-# A
+# Comparison of Different Regularization Method
 
-b
+- GP costs more computation (second differential), but is no better than Input Perturbation.
+- Attempting to remove the assumed bias (DDPM-$y$) actually makes it worse.
 
 </div>
 
@@ -284,16 +348,43 @@ b
 
 ---
 
-<div class="grid grid-cols-2">
+# The Power of Input Perturbation
+
+<img class="m-auto w-7/8 pt-10" src="/imgs/tab3.png" />
+
+<SlideCurrentNo class="absolute bottom-4 right-8" />
+
+---
+
+# Reduce Training Time
+
+<span></span>
+
+<p>
+
+- On CelebA, ADM-IP gets FID 1.51 at **120K training iterations**, whereas ADM gets FID 1.6 at convergence (**480K iterations**). <span v-click>$\Rightarrow$ **4$\times$ Training Speed-up**.</span>
+- On FFHQ, ADM receives FID 14.52 at convergence (**420K iterations**), while ADM-IP achieves a FID score of 8.81 with **only 60K iterations**. <span v-click>$\Rightarrow$ **7$\times$ Training Speed-up**</span>
+</p>
+
+<div class="grid grid-cols-3">
+
 <div>
-<img class="m-auto h-300px" src="/imgs/fig3/imagenet.png" />
+<img class="m-auto h-200px" src="/imgs/fig3/cifar10.png" />
 <p class="text-center text-2xl">
 
-ImageNet $32\times 32$
+CIFAR-10 $32\times 32$
+</p>
+</div>
+
+<div>
+<img class="m-auto h-200px" src="/imgs/fig3/celeba.png" />
+<p class="text-center text-2xl">
+
+CelebA $64\times 64$
 </p>
 </div>
 <div>
-<img class="m-auto h-300px" src="/imgs/fig3/ffhq.png" />
+<img class="m-auto h-200px" src="/imgs/fig3/ffhq.png" />
 
 <p class="text-center text-2xl">
 
@@ -311,8 +402,65 @@ FFHQ $128\times 128$
 
 ---
 
+<div class="grid grid-cols-2">
+
+<div class="mr-5">
+
 # Conclusion
 
-本篇研究提出了一個簡單的方法解決在 DPM 中的 Exposure Bias
+<span></span>
 
-將 Bias 假設為 Gaussian Distribution 其實並不合理，而且保留 bias 的 DDPM-IP 比去除 bias 的 DDPM-y 更好，
+## Contributions
+
+<p class="text-xl">
+
+This study proposes a simple method to solve Exposure Bias in DPM.
+- Significantly reduce training costs.
+- Achieve the same generation quality as previous methods while reducing steps.
+
+</p>
+
+## Doubts
+
+<p class="text-xl">
+
+Assuming Bias as Gaussian Distribution conflicts with the behavior of DDPM-IP.
+
+</p>
+
+</div>
+
+<img class="" src="/imgs/tab4.png" />
+
+</div>
+
+<SlideCurrentNo class="absolute bottom-4 right-8" />
+
+---
+
+# Discussions
+
+<div class="grid grid-cols-2">
+
+<div class="text-justify">
+<img class="m-auto col-span-1" src="/imgs/fig5.png" />
+
+Figure 5. Visualization of the exposure bias problem with different diffusion chain lengths.  
+$\hat x_0\sim p(x_{0:t-1}|x_t)$ 
+</div>
+
+<p class="ml-2 col-span-1 text-justify">
+
+## Why DDPM-IP Works?
+
+DDPM-IP actually does not match what is stated in the paper:
+- "Assume bias is a normal distribution" and
+- "Remove bias"
+
+Fig. 5 shows that DPM may excessively cut high-frequency signals when t is close to T. Therefore, the reason why DDPM-IP is effective may be due to "retaining more high frequencies."
+
+</p>
+
+</div>
+
+<SlideCurrentNo class="absolute bottom-4 right-8" />
