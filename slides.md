@@ -199,6 +199,8 @@ This is due to excessive error accumulation due to exposure bias.
 # Solutions
 <span class="text-xl">Smoother prediction function $\mu(\cdot)$</span>
 
+<div v-click>
+
 ## Regularization based on Lipschitz Continuous Functions
 
 <p class="text-xl">
@@ -211,6 +213,10 @@ $\mathcal{L}_\text{WD}=\mathcal{L}_\text{DPM}+\lambda_\text{WD}{\Vert\theta\Vert
 
 </p>
 
+</div>
+
+<div v-click>
+
 ## <span class="color-#a5a">**Regularization with Input Perturbation**</span>
 
 <p class="text-xl">
@@ -218,6 +224,8 @@ $\mathcal{L}_\text{WD}=\mathcal{L}_\text{DPM}+\lambda_\text{WD}{\Vert\theta\Vert
 Assume that the **Exposure Bias** follows a **Normal Distribution**  
 $\Rightarrow$ 1. Two spatially close points $a$ and $b$ should lead to similar predictions $\mu(a, t)$ and $\mu(b, t)$.
 </p>
+
+</div>
 
 <SlideCurrentNo class="absolute bottom-4 right-8" />
 
@@ -334,8 +342,8 @@ $$\begin{aligned}
 
 # Comparison of Different Regularization Method
 
-- GP costs more computation (second differential), but is no better than Input Perturbation.
-- Attempting to remove the assumed bias (DDPM-$y$) actually makes it worse.
+- <span v-click>GP costs more computation (second differential), but is no better than Input Perturbation.</span>
+- <span v-click>Attempting to remove the assumed bias (DDPM-$y$) actually makes it worse.</span>
 
 </div>
 
@@ -421,6 +429,8 @@ This study proposes a simple method to solve Exposure Bias in DPM.
 
 </p>
 
+<div v-click>
+
 ## Doubts
 
 <p class="text-xl">
@@ -428,6 +438,8 @@ This study proposes a simple method to solve Exposure Bias in DPM.
 Assuming Bias as Gaussian Distribution conflicts with the behavior of DDPM-IP.
 
 </p>
+
+</div>
 
 </div>
 
