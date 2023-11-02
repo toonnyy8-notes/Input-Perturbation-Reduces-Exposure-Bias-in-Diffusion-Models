@@ -14,6 +14,7 @@ drawings:
 transition: slide-left
 title: Welcome to Slidev
 mdc: true
+download: true
 ---
 
 ## [Input Perturbation](https://icml.cc/virtual/2023/poster/23960)
