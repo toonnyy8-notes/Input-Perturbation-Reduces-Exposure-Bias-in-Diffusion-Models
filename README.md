@@ -1,5 +1,5 @@
 # Input-Perturbation-Reduces-Exposure-Bias-in-Diffusion-Models
-[Input Perturbation Reduces Exposure Bias in Diffusion Models 筆記](https://toonnyy8-notes.github.io/Input-Perturbation-Reduces-Exposure-Bias-in-Diffusion-Models/dist/)
+[Input Perturbation Reduces Exposure Bias in Diffusion Models 筆記](https://toonnyy8-notes.github.io/Input-Perturbation-Reduces-Exposure-Bias-in-Diffusion-Models/)
 
 # Conclusion
 ## Contributions
